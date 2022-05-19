@@ -233,7 +233,7 @@ int PCAL9535A::digitalRead(int Pin)
   return -1; //Fail is state is ill-defined
 }
 
-int PCAL9535A::pinSetDriveStrength(int Pin, uint8_t State, bool Port)
+int PACL9535A::pinSetDriveStrength(int Pin, DriveStrength State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -241,13 +241,16 @@ int PCAL9535A::pinSetDriveStrength(int Pin, uint8_t State, bool Port)
   }
   uint8_t RegWriteVal = 0;
   switch(State) {
-    case DriveStrength::DEFAULT:
-      RegWriteVal = 0b11; //Default to max drive, this is POR on chip
-      break;
+    // case DriveStrength::DEFAULT:
+    //   RegWriteVal = 0b11; //Default to max drive, this is POR on chip
+    //   break;
     case DriveStrength::HIGH:
       RegWriteVal = 0b11; //Set to max drive
       break;
     case DriveStrength::STANDARD:
+      RegWriteVal = 0b00; //Use minimum drive as 'standard'
+      break;
+    default:
       RegWriteVal = 0b00; //Use minimum drive as 'standard'
       break;
   }
@@ -268,7 +271,7 @@ int PCAL9535A::pinSetDriveStrength(int Pin, uint8_t State, bool Port)
   return Error;
 }
 
-int PCAL9535A::pinSetDriveStrength(int Pin, uint8_t State)
+int PACL9535A::pinSetDriveStrength(int Pin, DriveStrength State)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -596,10 +599,10 @@ bool PCAL9535A::getInputPolarity(int Pin)
   }
 
   if(Pin >= 8) {
-    return getInputPolarity(Pin - 8, State, B); //Shift pin number, pass along to set port B
+    return getInputPolarity(Pin - 8, B); //Shift pin number, pass along to set port B
   }
   if(Pin <= 7) {
-    return getInputPolarity(Pin, State, A); //Pass along to set port A
+    return getInputPolarity(Pin, A); //Pass along to set port A
   }
   return -1; //Fail is state is ill-defined
 }
@@ -609,6 +612,7 @@ uint16_t PCAL9535A::getAllInterrupts(uint8_t Option)
   if(Option == IntAge::CURRENT) return readWord(FLAGA); //Return the current interrupt reg status
   if(Option == IntAge::STALE) return staleIntVals.interrupt; //Return stored interrupt reg
   if(Option == IntAge::BOTH) return readWord(FLAGA) | staleIntVals.interrupt; //Combine them to show if an interrupt has been triggered on the pin now or previously
+  return -1; //Return error
 }
 
 uint16_t PCAL9535A::getInterruptMask()
@@ -819,8 +823,8 @@ uint16_t PCAL9535A::readWord(int Pos, int &Error)
   unsigned long LocalTime = millis();
   Wire.requestFrom(ADR, 2);
   while(Wire.available() < 2 && (millis() - LocalTime < Timeout)); //Wait for data
-  uint16_t HighByte = Wire.read();
   uint16_t LowByte = Wire.read();
+  uint16_t HighByte = Wire.read();
   return (HighByte << 8) | LowByte; //Contatonate and return 
 }
 

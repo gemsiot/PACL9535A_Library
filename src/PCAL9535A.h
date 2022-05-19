@@ -21,6 +21,7 @@ Distributed as-is; no warranty is given.
 #define PCAL9535A_h
 
 #include <Arduino.h>
+#include <Particle.h>
 #include <Wire.h>
 
 #define ON 1
@@ -32,37 +33,38 @@ Distributed as-is; no warranty is given.
 
 #define INPUT_PULLDOWN 3  //4th potential state of operation for IO expander pins
 
-// #define BASE_ADR 0x20 //Base address for device, to be or-ed with configurable address
+#define PACL9535A_BASE_ADR 0x20 //Base address for device, to be or-ed with configurable address
+// #define BASE_ADR= 0x20 //Base address for device, to be or-ed with configurable address
 
-// #define DIRA 0x06
-// #define DIRB 0x07
-// #define POLA 0x04 
-// #define POLB 0x05
-// #define INTMASKA 0x4A
-// #define INTMASKB 0x4B
-// #define PULLUPA 0x48
-// #define PULLUPB 0x49
-// #define PULLUPENA 0x46
-// #define PULLUPENB 0x47 
-// #define PORTA 0x00
-// #define PORTB 0x01
-// #define LATA 0x02
-// #define LATB 0x03
-// #define LATCHA 0x44
-// #define LATCHB 0x45
-// #define DRIVEA 0x40
-// #define DRIVEB 0x42
-// #define PORTOUTPUT 0x4F
+// #define DIRA= 0x06
+// #define DIRB= 0x07
+// #define POLA= 0x04 
+// #define POLB= 0x05
+// #define INTMASKA= 0x4A
+// #define INTMASKB= 0x4B
+// #define PULLUPA= 0x48
+// #define PULLUPB= 0x49
+// #define PULLUPENA= 0x46
+// #define PULLUPENB= 0x47 
+// #define PORTA= 0x00
+// #define PORTB= 0x01
+// #define LATA= 0x02
+// #define LATB= 0x03
+// #define LATCHA= 0x44
+// #define LATCHB= 0x45
+// #define DRIVEA= 0x40
+// #define DRIVEB= 0x42
+// #define PORTOUTPUT= 0x4F
 
-// // #define DEFVALA 0x06
-// // #define DEFVALB 0x07
-// // #define IOCON 0x0A //Also 0x0B
-// #define FLAGA 0x4C
-// #define FLAGB 0x4D
-// // #define INTCAPA 0x10
-// // #define INTCAPB 0x11
-// // #define INTCONA 0x08
-// // #define INTCONB 0x09
+// // #define DEFVALA= 0x06
+// // #define DEFVALB= 0x07
+// // #define IOCON= 0x0A //Also= 0x0B
+// #define FLAGA= 0x4C
+// #define FLAGB= 0x4D
+// // #define INTCAPA= 0x10
+// // #define INTCAPB= 0x11
+// // #define INTCONA= 0x08
+// // #define INTCONB= 0x09
 
 // #define MEMORY_ERROR    0b10000000
 // #define READWRITE_ERROR 0b01000000
@@ -85,29 +87,43 @@ typedef struct  {
     uint16_t pullupEN;
 }intVals;
 
-namespace IntAge
-{
-    constexpr uint8_t CURRENT = 0;
-    constexpr uint8_t STALE = 1;
-    constexpr uint8_t BOTH = 2;
-}
+// enum class IntAge: uint8_t
+// {
+//     // constexpr uint8_t CURRENT = 0;
+//     // constexpr uint8_t STALE = 1;
+//     // constexpr uint8_t BOTH = 2;
+//     CURRENT = 0,
+//     STALE = 1,
+//     BOTH = 2,
+// };
 
 namespace OutputType 
 {
     constexpr uint8_t OPEN_DRAIN = 1;
     constexpr uint8_t PUSH_PULL = 0;
-}
+};
 
-namespace DriveStrength
-{
-    // constexpr uint8_t PER25 = 0b00;
-    // constexpr uint8_t PER50 = 0b01;
-    // constexpr uint8_t PER75 = 0b10;
-    // constexpr uint8_t PER100 = 0b11;
-    constexpr uint8_t DEFAULT = 0;
-    constexpr uint8_t HIGH = 1;
-    constexpr uint8_t STANDARD = 2;
-}
+// enum class DriveStrength: uint8_t
+// {
+//     // constexpr uint8_t PER25 = 0b00;
+//     // constexpr uint8_t PER50 = 0b01;
+//     // constexpr uint8_t PER75 = 0b10;
+//     // constexpr uint8_t PER100 = 0b11;
+//     DEFAULT = 0,
+//     HIGH = 1,
+//     STANDARD = 2,
+// };
+
+// enum class DriveStrength: uint8_t
+// {
+//     // constexpr uint8_t PER25 = 0b00;
+//     // constexpr uint8_t PER50 = 0b01;
+//     // constexpr uint8_t PER75 = 0b10;
+//     // constexpr uint8_t PER100 = 0b11;
+//     DEFAULT = 0,
+//     HIGH = 1,
+//     STANDARD = 2,
+// };
 
 class PCAL9535A
 {
@@ -127,15 +143,50 @@ class PCAL9535A
 //     uint16_t pullupEN;
 // };
 
-  public:
-    PCAL9535A(int _ADR = BASE_ADR); //Default to base address if none specified 
+    const int DIRA = 0x06;
+    const int DIRB = 0x07;
+    const int POLA = 0x04;
+    const int POLB = 0x05;
+    const int INTMASKA = 0x4A;
+    const int INTMASKB = 0x4B;
+    const int PULLUPA = 0x48;
+    const int PULLUPB = 0x49;
+    const int PULLUPENA = 0x46;
+    const int PULLUPENB = 0x47; 
+    const int PORTA = 0x00;
+    const int PORTB = 0x01;
+    const int LATA = 0x02;
+    const int LATB = 0x03;
+    const int LATCHA = 0x44;
+    const int LATCHB = 0x45;
+    const int DRIVEA = 0x40;
+    const int DRIVEB = 0x42;
+    const int PORTOUTPUT = 0x4F;
+
+    const int FLAGA = 0x4C;
+    const int FLAGB = 0x4D;
+
+    const int MEMORY_ERROR    = 0b10000000;
+    const int READWRITE_ERROR = 0b01000000;
+    const int OUTPUT_ERROR    = 0b00100000;
+    
+    public:
+    //FIX!
+    constexpr static int SAFEOFF = -1; //No additional error logging
+    constexpr static int SAFE1 = 0; //I2C error logging only
+    constexpr static int SAFE2 = 1; //Memory and read write error logging
+    constexpr static int SAFE3 = 2; //Output error logging
+    constexpr static int SAFE = 99; //Turn on all possible safety protocols 
+
+  
+    PACL9535A(int _ADR = PACL9535A_BASE_ADR); //Default to base address if none specified 
     int begin(void);
     int pinMode(int Pin, uint8_t State, bool Port);
     int pinMode(int Pin, uint8_t State);
     int digitalWrite(int Pin, bool State, bool Port);
     int digitalWrite(int Pin, bool State);
-    int pinSetDriveStrength(int Pin, uint8_t State, bool Port);
-    int pinSetDriveStrength(int Pin, uint8_t State);
+    int pinSetDriveStrength(int Pin, DriveStrength State, bool Port);
+    int pinSetDriveStrength(int Pin, DriveStrength State);
     int digitalRead(int Pin, bool Port);
     int digitalRead(int Pin);
     int setInterrupt(int Pin, bool State, bool Port);
@@ -161,60 +212,43 @@ class PCAL9535A
     uint16_t clearError();
     void safeMode(int state = SAFE); //Turn to max by default 
     intVals staleIntVals;
-
+    // #ifndef DriveStrength
+    // enum class DriveStrength: uint8_t
+    // {
+    //     // constexpr uint8_t PER25 = 0b00;
+    //     // constexpr uint8_t PER50 = 0b01;
+    //     // constexpr uint8_t PER75 = 0b10;
+    //     // constexpr uint8_t PER100 = 0b11;
+    //     DEFAULT = 0,
+    //     HIGH = 1,
+    //     STANDARD = 2,
+    // };
+    // #endif
+    enum IntAge
+    {
+        // constexpr uint8_t CURRENT = 0;
+        // constexpr uint8_t STALE = 1;
+        // constexpr uint8_t BOTH = 2;
+        CURRENT = 0,
+        STALE = 1,
+        BOTH = 2,
+    };
 
     
 
   private:
-
-    const int BASE_ADR 0x20 //Base address for device, to be or-ed with configurable address
-
-    const int DIRA 0x06
-    const int DIRB 0x07
-    const int POLA 0x04 
-    const int POLB 0x05
-    const int INTMASKA 0x4A
-    const int INTMASKB 0x4B
-    const int PULLUPA 0x48
-    const int PULLUPB 0x49
-    const int PULLUPENA 0x46
-    const int PULLUPENB 0x47 
-    const int PORTA 0x00
-    const int PORTB 0x01
-    const int LATA 0x02
-    const int LATB 0x03
-    const int LATCHA 0x44
-    const int LATCHB 0x45
-    const int DRIVEA 0x40
-    const int DRIVEB 0x42
-    const int PORTOUTPUT 0x4F
-
-    const int FLAGA 0x4C
-    const int FLAGB 0x4D
-
-    const int MEMORY_ERROR    0b10000000
-    const int READWRITE_ERROR 0b01000000
-    const int OUTPUT_ERROR    0b00100000
-
-    //FIX!
-    const int SAFEOFF -1 //No additional error logging
-    const int SAFE1 0 //I2C error logging only
-    const int SAFE2 1 //Memory and read write error logging
-    const int SAFE3 2 //Output error logging
-    const int SAFE 99 //Turn on all possible safety protocols 
-
-    int ADR = BASE_ADR; //FIX! Replace with equation later
+    int ADR = PACL9535A_BASE_ADR; //FIX! Replace with equation later
     unsigned long Timeout = 10; //Wait at most 10ms for a response from the device
-  	uint8_t PinModeConf[2] = {0xFF, 0xFF}; //All pins natively inputs (IODIRx)
+    uint8_t PinModeConf[2] = {0xFF,0xFF}; //All pins natively inputs (IODIRx)
     uint8_t PortState[2] = {0}; //All pins natively off (LATx)
     uint8_t PinPolarityConfig[2] = {0x00}; //All pins natively non-inverted (IPOLx)
-    uint8_t PullUpConf[2] = {0xFF, 0xFF}; //Pullup be default 
+    uint8_t PullUpConf[2] = {0xFF,0xFF}; //Pullup be default 
     uint8_t PullUpEnable[2] = {0x00}; //Natively disabled (GPPUx)
-    uint8_t InterruptMask[2] = {0xFF, 0xFF}; //Interrupts dissabled by default 
+    uint8_t InterruptMask[2] = {0xFF,0xFF}; //Interrupts dissabled by default 
     // uint8_t DefaultValConf[2] = {0x00}; //Default interrupt value (DEFVALx)
     // uint8_t InterruptTypeConf[2] = {0x00}; //Interrupt type values (INTCONx)
     uint8_t InputLatch[2] = {0x00}; //Default to non-latching 
-    uint8_t CurrentControl[4] = {0xFF, 0xFF, 0xFF, 0xFF}; //Default to max output current 
+    uint8_t CurrentControl[4] = {0xFF,0xFF,0xFF,0xFF}; //Default to max output current 
     uint8_t PortOutput = 0x00; //Default to push-pull outputs
 
     bool staleInterrupt = false; //Set if an interrupt has occoured during other process

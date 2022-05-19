@@ -1,9 +1,9 @@
 /******************************************************************************
-PACL9535A.cpp
-Interface for PACL9535A 16 bit IO expander
+PCAL9535A.cpp
+Interface for PCAL9535A 16 bit IO expander
 Bobby Schulz @ GEMS IoT
 04/25/2022
-https://github.com/gemsiot/PACL9535A_Library
+https://github.com/gemsiot/PCAL9535A_Library
 
 Based on MCP23008 library developed by Northern Widget
 
@@ -18,16 +18,16 @@ Distributed as-is; no warranty is given.
 ******************************************************************************/
 
 // #include <Arduino.h>
-#include <PACL9535A.h>
+#include <PCAL9535A.h>
 // #include <Wire.h>
 
-PACL9535A::PACL9535A(int _ADR)
+PCAL9535A::PCAL9535A(int _ADR)
 {
   ADR = _ADR; //FIX ADR!
 }
 
 
-int PACL9535A::begin(void)  //FIX! Combine interrupt lines be default!
+int PCAL9535A::begin(void)  //FIX! Combine interrupt lines be default!
 {
   #if defined(ARDUINO) && ARDUINO >= 100 
     Wire.begin();
@@ -59,7 +59,7 @@ int PACL9535A::begin(void)  //FIX! Combine interrupt lines be default!
 }
 
 
-int PACL9535A::pinMode(int Pin, uint8_t PinType, bool Port)
+int PCAL9535A::pinMode(int Pin, uint8_t PinType, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -129,7 +129,7 @@ int PACL9535A::pinMode(int Pin, uint8_t PinType, bool Port)
     return -1; //Fail if pin type not defined 
 }
 
-int PACL9535A::pinMode(int Pin, uint8_t PinType)
+int PCAL9535A::pinMode(int Pin, uint8_t PinType)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -145,7 +145,7 @@ int PACL9535A::pinMode(int Pin, uint8_t PinType)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::digitalWrite(int Pin, bool State, bool Port)
+int PCAL9535A::digitalWrite(int Pin, bool State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -191,7 +191,7 @@ int PACL9535A::digitalWrite(int Pin, bool State, bool Port)
   
 }
 
-int PACL9535A::digitalWrite(int Pin, bool State)
+int PCAL9535A::digitalWrite(int Pin, bool State)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -207,7 +207,7 @@ int PACL9535A::digitalWrite(int Pin, bool State)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::digitalRead(int Pin, bool Port)
+int PCAL9535A::digitalRead(int Pin, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -217,7 +217,7 @@ int PACL9535A::digitalRead(int Pin, bool Port)
   return (readPort(Port) >> Pin) & 0x01; //Return selected bit of the port value
 }
 
-int PACL9535A::digitalRead(int Pin)
+int PCAL9535A::digitalRead(int Pin)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -233,7 +233,7 @@ int PACL9535A::digitalRead(int Pin)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::pinSetDriveStrength(int Pin, uint8_t State, bool Port)
+int PCAL9535A::pinSetDriveStrength(int Pin, uint8_t State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -268,7 +268,7 @@ int PACL9535A::pinSetDriveStrength(int Pin, uint8_t State, bool Port)
   return Error;
 }
 
-int PACL9535A::pinSetDriveStrength(int Pin, uint8_t State)
+int PCAL9535A::pinSetDriveStrength(int Pin, uint8_t State)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -284,7 +284,7 @@ int PACL9535A::pinSetDriveStrength(int Pin, uint8_t State)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::setInterrupt(int Pin, bool State, bool Port)
+int PCAL9535A::setInterrupt(int Pin, bool State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -311,7 +311,7 @@ int PACL9535A::setInterrupt(int Pin, bool State, bool Port)
     return -1; //Fail if state is ill-defined
 }
 
-int PACL9535A::setInterrupt(int Pin, bool State)
+int PCAL9535A::setInterrupt(int Pin, bool State)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -327,7 +327,7 @@ int PACL9535A::setInterrupt(int Pin, bool State)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::setLatch(int Pin, bool State, bool Port)
+int PCAL9535A::setLatch(int Pin, bool State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -354,7 +354,7 @@ int PACL9535A::setLatch(int Pin, bool State, bool Port)
     return -1; //Fail if state is ill-defined
 }
 
-int PACL9535A::setLatch(int Pin, bool State)
+int PCAL9535A::setLatch(int Pin, bool State)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -370,7 +370,7 @@ int PACL9535A::setLatch(int Pin, bool State)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::setPort(int Config, bool Port) 
+int PCAL9535A::setPort(int Config, bool Port) 
 {
   // Wire.beginTransmission(ADR); // transmit to device with address ADR
   // Wire.write(LATA + Port);   //Send to output set register
@@ -393,7 +393,7 @@ int PACL9535A::setPort(int Config, bool Port)
   return Error; 
 }
 
-int PACL9535A::setDirection(int Config, bool Port) 
+int PCAL9535A::setDirection(int Config, bool Port) 
 {
   // Serial.println(Config, HEX); //DEBUG!
   // Wire.beginTransmission(ADR); // transmit to device with address ADR
@@ -416,7 +416,7 @@ int PACL9535A::setDirection(int Config, bool Port)
   return Error; 
 }
 
-int PACL9535A::setPolarity(int Config, bool Port) 
+int PCAL9535A::setPolarity(int Config, bool Port) 
 {
   // Wire.beginTransmission(ADR); // transmit to device with address ADR
   // Wire.write(POLA + Port);        //Send to port configuration register
@@ -436,7 +436,7 @@ int PACL9535A::setPolarity(int Config, bool Port)
   return Error; 
 }
 
-int PACL9535A::setPullupDir(int Config, bool Port) 
+int PCAL9535A::setPullupDir(int Config, bool Port) 
 {
   // Serial.println(Config, HEX); //DEBUG!
   // Wire.beginTransmission(ADR); // transmit to device with address ADR
@@ -457,7 +457,7 @@ int PACL9535A::setPullupDir(int Config, bool Port)
   return Error; 
 }
 
-int PACL9535A::setPullupEN(int Config, bool Port) 
+int PCAL9535A::setPullupEN(int Config, bool Port) 
 {
   // Serial.println(Config, HEX); //DEBUG!
   // Wire.beginTransmission(ADR); // transmit to device with address ADR
@@ -478,7 +478,7 @@ int PACL9535A::setPullupEN(int Config, bool Port)
   return Error; 
 }
 
-int PACL9535A::getInterrupt(int Pin)
+int PCAL9535A::getInterrupt(int Pin)
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -500,7 +500,7 @@ int PACL9535A::getInterrupt(int Pin)
   return -1; //Fail is state is ill-defined
 }
 
-unsigned int PACL9535A::clearInterrupt(uint8_t Option)
+unsigned int PCAL9535A::clearInterrupt(uint8_t Option)
 {
   // switch(Port){ //Read port to clear interrupts and returns pin state 
   //   case A:
@@ -523,7 +523,7 @@ unsigned int PACL9535A::clearInterrupt(uint8_t Option)
 }
 
 //IN DEVLOPMENT
-int PACL9535A::setInputPolarity(int Pin, bool State, bool Port)
+int PCAL9535A::setInputPolarity(int Pin, bool State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -552,7 +552,7 @@ int PACL9535A::setInputPolarity(int Pin, bool State, bool Port)
 }
 
 //IN DEVLOPMENT
-int PACL9535A::setInputPolarity(int Pin, bool State) 
+int PCAL9535A::setInputPolarity(int Pin, bool State) 
 {
   if(Pin > 15 || Pin < 0)
   {
@@ -570,7 +570,7 @@ int PACL9535A::setInputPolarity(int Pin, bool State)
 }
 
 //IN DEVLOPMENT
-bool PACL9535A::getInputPolarity(int Pin, bool Port)
+bool PCAL9535A::getInputPolarity(int Pin, bool Port)
 {
   // return 0; 
   if(Pin > 8 || Pin < 0)
@@ -587,7 +587,7 @@ bool PACL9535A::getInputPolarity(int Pin, bool Port)
 }
 
 //IN DEVLOPMENT
-bool PACL9535A::getInputPolarity(int Pin)
+bool PCAL9535A::getInputPolarity(int Pin)
 {
   // return 0;
   if(Pin > 15 || Pin < 0)
@@ -604,14 +604,14 @@ bool PACL9535A::getInputPolarity(int Pin)
   return -1; //Fail is state is ill-defined
 }
 
-uint16_t PACL9535A::getAllInterrupts(uint8_t Option)
+uint16_t PCAL9535A::getAllInterrupts(uint8_t Option)
 {
   if(Option == IntAge::CURRENT) return readWord(FLAGA); //Return the current interrupt reg status
   if(Option == IntAge::STALE) return staleIntVals.interrupt; //Return stored interrupt reg
   if(Option == IntAge::BOTH) return readWord(FLAGA) | staleIntVals.interrupt; //Combine them to show if an interrupt has been triggered on the pin now or previously
 }
 
-uint16_t PACL9535A::getInterruptMask()
+uint16_t PCAL9535A::getInterruptMask()
 {
   int Error = 0;
   uint16_t Data = readWord(INTMASKA, Error);
@@ -627,7 +627,7 @@ uint16_t PACL9535A::getInterruptMask()
   else return 0; //FIX?? 
 }
 
-uint16_t PACL9535A::getLatch()
+uint16_t PCAL9535A::getLatch()
 {
   int Error = 0;
   uint16_t Data = readWord(LATCHA, Error);
@@ -643,7 +643,7 @@ uint16_t PACL9535A::getLatch()
   else return 0; //FIX?? 
 }
 
-int PACL9535A::readPort(bool Port)
+int PCAL9535A::readPort(bool Port)
 {
   if(readWord(FLAGA) != 0x0000) { //If there currently is an interrupt,
     staleIntVals.interrupt = getAllInterrupts(IntAge::CURRENT); //Grab interrupt output
@@ -662,7 +662,7 @@ int PACL9535A::readPort(bool Port)
 }
 
 //Pin -> The pin (0~15) which should be configured, Latch -> if true, result is moved into the PORT register after the interrupt event and stored there, and the interrupt flag remains set 
-int PACL9535A::setIntPinConfig(int Pin, bool Latch)
+int PCAL9535A::setIntPinConfig(int Pin, bool Latch)
 {
   // uint8_t DefVals = 0; //Used to store the existing default value configuration of the port in question
   // uint8_t Control = 0; //Used to store the existing int control register configuration of the port in question
@@ -723,7 +723,7 @@ int PACL9535A::setIntPinConfig(int Pin, bool Latch)
   return -1; //Fail is state is ill-defined
 }
 
-// int PACL9535A::setIntConfig(bool Mirror, bool OpenDrain, bool Polarity, bool Clearing)
+// int PCAL9535A::setIntConfig(bool Mirror, bool OpenDrain, bool Polarity, bool Clearing)
 // {
 //   uint8_t Config = 0x00 | (Mirror << 6) | (OpenDrain << 2) | (Polarity << 1) | Clearing; //Assembly config register 
 //   Wire.beginTransmission(ADR); // transmit to device with address ADR
@@ -732,7 +732,7 @@ int PACL9535A::setIntPinConfig(int Pin, bool Latch)
 //   return Wire.endTransmission();    // stop transmitting
 // }
 
-int PACL9535A::setBusOutput(uint8_t Mode, bool Port)
+int PCAL9535A::setBusOutput(uint8_t Mode, bool Port)
 {
   int Error = 0;
   uint8_t CurrentOutput = readByte(PORTOUTPUT, Error); //Read in current state
@@ -750,12 +750,12 @@ int PACL9535A::setBusOutput(uint8_t Mode, bool Port)
   return Error; 
 }
 
-uint16_t PACL9535A::getError()
+uint16_t PCAL9535A::getError()
 {
   return (globalError << 8) | globalErrorI2C;
 }
 
-uint16_t PACL9535A::clearError()
+uint16_t PCAL9535A::clearError()
 {
   uint16_t errorTemp = (globalError << 8) | globalErrorI2C; //Make local copy
   globalError = 0x00; //Clear stored 
@@ -763,12 +763,12 @@ uint16_t PACL9535A::clearError()
   return errorTemp; //Return value from before clear
 }
 
-void PACL9535A::safeMode(int state)
+void PCAL9535A::safeMode(int state)
 {
   systemSafe = state; //Set updated state of system
 }
 
-uint16_t PACL9535A::readBus()
+uint16_t PCAL9535A::readBus()
 {
   // Wire.beginTransmission(ADR); // transmit to device with address ADR
   // Wire.write(PORTA);        //Address appropriate port register
@@ -788,7 +788,7 @@ uint16_t PACL9535A::readBus()
 }
 
 //Error returns the error state of the I2C transmission
-uint8_t PACL9535A::readByte(int Pos, int &Error)
+uint8_t PCAL9535A::readByte(int Pos, int &Error)
 {
   Wire.beginTransmission(ADR); // transmit to device with address ADR
   Wire.write(Pos);        //Address appropriate register
@@ -801,7 +801,7 @@ uint8_t PACL9535A::readByte(int Pos, int &Error)
   return Wire.read();
 }
 
-uint8_t PACL9535A::readByte(int Pos)
+uint8_t PCAL9535A::readByte(int Pos)
 {
   int Dummy = 0; //Pass error into a dummy variable 
   return readByte(Pos, Dummy);
@@ -809,7 +809,7 @@ uint8_t PACL9535A::readByte(int Pos)
 
 
 //Error returns the error state of the I2C transmission
-uint16_t PACL9535A::readWord(int Pos, int &Error)
+uint16_t PCAL9535A::readWord(int Pos, int &Error)
 {
   Wire.beginTransmission(ADR);
   Wire.write(Pos);
@@ -824,13 +824,13 @@ uint16_t PACL9535A::readWord(int Pos, int &Error)
   return (HighByte << 8) | LowByte; //Contatonate and return 
 }
 
-uint16_t PACL9535A::readWord(int Pos)
+uint16_t PCAL9535A::readWord(int Pos)
 {
   int Dummy = 0; //Pass error into a dummy variable 
   return readWord(Pos, Dummy);
 }
 
-int PACL9535A::writeByte(int Pos, uint8_t Val)
+int PCAL9535A::writeByte(int Pos, uint8_t Val)
 {
   Wire.beginTransmission(ADR); // transmit to device with address ADR
   Wire.write(Pos);        //Address appropriate register
@@ -847,13 +847,13 @@ int PACL9535A::writeByte(int Pos, uint8_t Val)
   return Error; 
 }
 
-uint8_t PACL9535A::clearBit(uint8_t Val, uint8_t Pos)
+uint8_t PCAL9535A::clearBit(uint8_t Val, uint8_t Pos)
 {
   return Val & ~(0x01 << Pos); //Return adjusted byte
 }
 
 //Converts a position encoded value into a bit-wise encoding 
-uint8_t PACL9535A::positionDecode(uint8_t Val, uint8_t Pos)
+uint8_t PCAL9535A::positionDecode(uint8_t Val, uint8_t Pos)
 {
   if(Pos == 0) return Val; //Return unalterned if there is no bit to set
   return Val | (0x01 << (Pos - 1)); //Return adjusted byte

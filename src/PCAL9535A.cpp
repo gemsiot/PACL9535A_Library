@@ -339,7 +339,8 @@ int PCAL9535A::setLatch(int Pin, bool State, bool Port)
 
   if(State == ON)
   {
-    InputLatch[Port] = InputLatch[Port] & ~(0x01 << Pin);
+    InputLatch[Port] = InputLatch[Port] | (0x01 << Pin);
+    // InputLatch[Port] = InputLatch[Port] & ~(0x01 << Pin);
     // Serial.print("Reg 0x01 = ");  //DEBUG!
     // Serial.println(Port, HEX); //DEBUG!
     writeByte(LATCHA + Port, InputLatch[Port]); //Write adjusted value back
@@ -347,7 +348,8 @@ int PCAL9535A::setLatch(int Pin, bool State, bool Port)
   }
   else if(State == OFF)
   {
-    InputLatch[Port] = InputLatch[Port] | (0x01 << Pin);
+    // InputLatch[Port] = InputLatch[Port] | (0x01 << Pin);
+    InputLatch[Port] = InputLatch[Port] & ~(0x01 << Pin);
     // Serial.print("Reg 0x01 = ");  //DEBUG!
     // Serial.println(Port, HEX); //DEBUG!
     writeByte(LATCHA + Port, InputLatch[Port]); //Write adjusted value back

@@ -17,8 +17,8 @@ Allows control of all aspects of the control of the IO expander
 Distributed as-is; no warranty is given.
 ******************************************************************************/
 
-#ifndef PACL9535A_h
-#define PACL9535A_h
+#ifndef PCAL9535A_h
+#define PCAL9535A_h
 
 #include <Arduino.h>
 #include <Particle.h>
@@ -125,7 +125,7 @@ namespace OutputType
 //     STANDARD = 2,
 // };
 
-class PACL9535A
+class PCAL9535A
 {
     //     enum IO_Type
     // {
@@ -142,7 +142,6 @@ class PACL9535A
 //     uint16_t pullupDir;
 //     uint16_t pullupEN;
 // };
-
 
     const int DIRA = 0x06;
     const int DIRB = 0x07;
@@ -238,11 +237,6 @@ class PACL9535A
     
 
   private:
-
-    
-
-    
-
     int ADR = PACL9535A_BASE_ADR; //FIX! Replace with equation later
     unsigned long Timeout = 10; //Wait at most 10ms for a response from the device
     uint8_t PinModeConf[2] = {0xFF,0xFF}; //All pins natively inputs (IODIRx)

@@ -33,7 +33,7 @@ Distributed as-is; no warranty is given.
 
 #define INPUT_PULLDOWN 3  //4th potential state of operation for IO expander pins
 
-#define PACL9535A_BASE_ADR 0x20 //Base address for device, to be or-ed with configurable address
+#define PCAL9535A_BASE_ADR 0x20 //Base address for device, to be or-ed with configurable address
 // #define BASE_ADR= 0x20 //Base address for device, to be or-ed with configurable address
 
 // #define DIRA= 0x06
@@ -179,7 +179,7 @@ class PCAL9535A
     constexpr static int SAFE = 99; //Turn on all possible safety protocols 
 
   
-    PACL9535A(int _ADR = PACL9535A_BASE_ADR); //Default to base address if none specified 
+    PCAL9535A(int _ADR = PCAL9535A_BASE_ADR); //Default to base address if none specified 
     int begin(void);
     int pinMode(int Pin, uint8_t State, bool Port);
     int pinMode(int Pin, uint8_t State);
@@ -234,10 +234,11 @@ class PCAL9535A
         BOTH = 2,
     };
 
+    uint16_t readWord(int Pos, int &Error);
     
 
   private:
-    int ADR = PACL9535A_BASE_ADR; //FIX! Replace with equation later
+    int ADR = PCAL9535A_BASE_ADR; //FIX! Replace with equation later
     unsigned long Timeout = 10; //Wait at most 10ms for a response from the device
     uint8_t PinModeConf[2] = {0xFF,0xFF}; //All pins natively inputs (IODIRx)
     uint8_t PortState[2] = {0}; //All pins natively off (LATx)
@@ -267,7 +268,7 @@ class PCAL9535A
     int readPort(bool Port); 
     uint8_t readByte(int Pos, int &Error);
     uint8_t readByte(int Pos);
-    uint16_t readWord(int Pos, int &Error);
+    
     uint16_t readWord(int Pos);
     int writeByte(int Pos, uint8_t Val);
     uint8_t clearBit(uint8_t Val, uint8_t Pos);

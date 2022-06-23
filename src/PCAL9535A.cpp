@@ -54,8 +54,9 @@ int PCAL9535A::begin(void)  //FIX! Combine interrupt lines be default!
   PortOutput = readByte(PORTOUTPUT);
 
   Wire.beginTransmission(ADR); //Test if device present 
-  if(Wire.endTransmission() != 0) return -1;
-  else return 1;
+  int Error = Wire.endTransmission();
+  if(Error != 0) return -1;
+  else return Error;
 }
 
 
@@ -233,7 +234,7 @@ int PCAL9535A::digitalRead(int Pin)
   return -1; //Fail is state is ill-defined
 }
 
-int PACL9535A::pinSetDriveStrength(int Pin, DriveStrength State, bool Port)
+int PCAL9535A::pinSetDriveStrength(int Pin, DriveStrength State, bool Port)
 {
   if(Pin > 8 || Pin < 0)
   {
@@ -271,7 +272,7 @@ int PACL9535A::pinSetDriveStrength(int Pin, DriveStrength State, bool Port)
   return Error;
 }
 
-int PACL9535A::pinSetDriveStrength(int Pin, DriveStrength State)
+int PCAL9535A::pinSetDriveStrength(int Pin, DriveStrength State)
 {
   if(Pin > 15 || Pin < 0)
   {

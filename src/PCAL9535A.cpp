@@ -15,6 +15,8 @@ Allows control of all aspects of the control of the IO expander
 -Zhuangzi
 
 Distributed as-is; no warranty is given.
+
+© 2023 Regents of the University of Minnesota. All rights reserved.
 ******************************************************************************/
 
 // #include <Arduino.h>
